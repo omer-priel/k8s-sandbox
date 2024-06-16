@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-example-deployment
+  labels:
+    app: fastapi-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fastapi-example
+  template:
+    metadata:
+      labels:
+        app: fastapi-example
+    spec:
+      containers:
+      - name: fastapi-example
+        image: host.minikube.internal:5000/k8s-sandbox-fastapi-example
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000

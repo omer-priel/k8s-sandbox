@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  # services
+  express-example:
+    build:
+      context: ./services/express-example
+  fastapi-example:
+    build:
+      context: ./services/fastapi-example
+  fastify-example:
+    build:
+      context: ./services/fastify-example
+  flask-example:
+    build:
+      context: ./services/flask-example
+  nginx-example:
+    build:
+      context: ./services/nginx-example
+
+  # lint
+  activity-python:
+    build:
+      context: ./packages/python/k8s-sandbox-activity
+  activity-typescript:
+    build:
+      context: ./packages/typescript/k8s-sandbox-activity
+
+  # tests
+  tests-infra:
+    build:
+      context: ./tests/infra
+    network_mode: "host"
+    volumes:
+      - /etc/hosts:/etc/hosts
+
+  tests-integration:
+    build:
+      context: ./tests/integration
+    network_mode: "host"
+    volumes:
+      - /etc/hosts:/etc/hosts
+

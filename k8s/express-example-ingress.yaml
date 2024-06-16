@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: express-example-ingress
+spec:
+  rules:
+  - host: express-example.test
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: express-example-service
+            port:
+              number: 80

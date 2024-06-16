@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-example-deployment
+  labels:
+    app: flask-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-example
+  template:
+    metadata:
+      labels:
+        app: flask-example
+    spec:
+      containers:
+      - name: flask-example
+        image: host.minikube.internal:5000/k8s-sandbox-flask-example
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000

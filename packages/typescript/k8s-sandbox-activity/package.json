@@ -1,0 +1,12 @@
+{
+  "name": "k8s-sandbox-activity",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "prettier:fix": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc.json",
+    "eslint:fix": "eslint . --fix",
+    "eslint:lint": "eslint ."
+  }
+}

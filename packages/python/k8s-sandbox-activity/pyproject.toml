@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "k8s-sandbox-activity"
+version = "0.1.0"
+description = ""
+authors = []
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.black]
+target-version = ['py311']
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.git
+    | \.mypy_cache
+  )/
+)
+'''

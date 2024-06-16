@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastify-example-ingress
+spec:
+  rules:
+  - host: fastify-example.test
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fastify-example-service
+            port:
+              number: 80

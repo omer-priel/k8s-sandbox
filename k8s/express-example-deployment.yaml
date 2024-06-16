@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-example-deployment
+  labels:
+    app: express-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: express-example
+  template:
+    metadata:
+      labels:
+        app: express-example
+    spec:
+      containers:
+      - name: express-example
+        image: host.minikube.internal:5000/k8s-sandbox-express-example
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
