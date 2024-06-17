@@ -2,6 +2,10 @@ FROM python:3.12
 
 WORKDIR /app
 
+
+RUN apt install pipx
+RUN pipx install poetry
+
 RUN pip install flake8 black mypy
 
 COPY src /app/src

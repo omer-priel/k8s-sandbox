@@ -123,6 +123,7 @@ Add the following line:
 | Port  | Description  |
 | ----- | ------------ |
 | 8000  | Service      |
+| 8080  | pip registry |
 | 27017 | MongoDB      |
 
 ## Data Flow

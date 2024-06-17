@@ -43,7 +43,7 @@ minikube-dashboard:
 show-endpoints:
 	minikube ip
 
-# registry
+# registry / docker
 show-proccess-on-port-5000:
 	sudo lsof -i :5000
 
@@ -56,6 +56,10 @@ stop-registry:
 
 delete-registry:
 	docker compose -f docker-compose.registry.yaml down --rmi local --volumes
+
+# registry / python
+show-pip-packages:
+	curl -X GET http://127.0.0.1:8080/packages/
 
 # images
 build-images:
