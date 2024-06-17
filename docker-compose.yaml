@@ -2,6 +2,9 @@ version: '3.7'
 
 services:
   # services
+  django-example:
+    build:
+      context: ./services/django-example
   express-example:
     build:
       context: ./services/express-example
@@ -39,11 +42,9 @@ services:
     network_mode: "host"
     volumes:
       - /etc/hosts:/etc/hosts
-
   tests-integration:
     build:
       context: ./tests/integration
     network_mode: "host"
     volumes:
       - /etc/hosts:/etc/hosts
-

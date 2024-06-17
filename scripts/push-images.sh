@@ -21,3 +21,6 @@ docker push localhost:5000/k8s-sandbox-gohttp-example:latest
 
 docker tag k8s-sandbox-gin-example:latest localhost:5000/k8s-sandbox-gin-example:latest
 docker push localhost:5000/k8s-sandbox-gin-example:latest
+
+docker tag k8s-sandbox-django-example:latest localhost:5000/k8s-sandbox-django-example:latest
+docker push localhost:5000/k8s-sandbox-django-example:latest

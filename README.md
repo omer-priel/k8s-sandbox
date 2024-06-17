@@ -146,6 +146,7 @@ flowchart LR
       fastify-image
       gohttp-image
       gin-image
+      django-image
     end
     subgraph cluster[cluster minikube]
       subgraph control-plane-node
@@ -161,6 +162,7 @@ flowchart LR
         fastify-pod-1
         gohttp-pod-1
         gin-pod-1
+        django-pod-1
       end
 
       subgraph worker-node
@@ -178,6 +180,8 @@ flowchart LR
         gohttp-pod-3
         gin-pod-2
         gin-pod-3
+        django-pod-2
+        django-pod-3
       end
       
       worker-node <---> control-plane-node
@@ -203,6 +207,9 @@ flowchart LR
       gin-image --> gin-deployment
       gin-deployment --> gin-pod-1 & gin-pod-2 & gin-pod-3
 
+      django-image --> django-deployment
+      django-deployment --> django-pod-1 & django-pod-2 & django-pod-3
+
       nginx-service --> nginx-pod-1 & nginx-pod-2 & nginx-pod-3
       express-service --> express-pod-1 & express-pod-2 & express-pod-3
       fastapi-service --> fastapi-pod-1 & fastapi-pod-2 & fastapi-pod-3
@@ -210,6 +217,7 @@ flowchart LR
       fastify-service --> fastify-pod-1 & fastify-pod-2 & fastify-pod-3
       gohttp-service --> gohttp-pod-1 & gohttp-pod-2 & gohttp-pod-3
       gin-service --> gin-pod-1 & gin-pod-2 & gin-pod-3
+      django-service --> django-pod-1 & django-pod-2 & django-pod-3
       
       nginx-ingress --> nginx-service
       express-ingress --> express-service
@@ -218,6 +226,7 @@ flowchart LR
       fastify-ingress --> fastify-service
       gohttp-ingress --> gohttp-service
       gin-ingress --> gin-service
+      django-ingress --> django-service
     end
   end
   subgraph Maintainer
@@ -226,32 +235,35 @@ flowchart LR
       pull-nginx --> build-nginx[build] --> nginx-image
       
       pull-express[pull] --> node-base-image
-      pull-express --> express-nginx[build] --> lint-express[lint] --> express-image
+      pull-express --> build-express[build] --> lint-express[lint] --> express-image
       
       pull-fastapi[pull] --> python-base-image
-      pull-fastapi --> fastapi-nginx[build] --> fastapi-image
+      pull-fastapi --> build-fastapi[build] --> fastapi-image
       
       pull-flask[pull] --> python-base-image
-      pull-flask --> flask-nginx[build] --> flask-image
+      pull-flask --> build-flask[build] --> flask-image
       
       pull-fastify[pull] --> node-base-image
-      pull-fastify --> fastify-nginx[build] --> lint-fastify[lint] --> fastify-image
+      pull-fastify --> build-fastify[build] --> lint-fastify[lint] --> fastify-image
 
       pull-gohttp[pull] --> go-base-image
-      pull-gohttp --> gohttp-nginx[build] --> gohttp-image
+      pull-gohttp --> build-gohttp[build] --> gohttp-image
 
       pull-gin[pull] --> go-base-image
-      pull-gin --> gin-nginx[build] --> gin-image
+      pull-gin --> build-gin[build] --> gin-image
+
+      pull-django[pull] --> python-base-image
+      pull-django --> build-django[build] --> django-image
     end
 
     Terminal-Maintainer[Terminal] ---> local-registy
     Terminal-Maintainer --> CI
     Terminal-Maintainer --> kubectl --> k8s-api-server
-    Terminal-Maintainer ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress
-    Browser-Maintainer[Browser] ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress
+    Terminal-Maintainer ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress & django-ingress
+    Browser-Maintainer[Browser] ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress & django-ingress
   end
   subgraph Client
-    Browser ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress
+    Browser ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress & django-ingress
   end
 ```
 

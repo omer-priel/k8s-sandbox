@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-example-deployment
+  labels:
+    app: django-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: django-example
+  template:
+    metadata:
+      labels:
+        app: django-example
+    spec:
+      containers:
+      - name: django-example
+        image: host.minikube.internal:5000/k8s-sandbox-django-example
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000

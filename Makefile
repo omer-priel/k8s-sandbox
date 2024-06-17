@@ -14,7 +14,13 @@ lint: yamllint shellcheck kube-linter
 
 # cluster
 start-cluster:
-	minikube start --driver=docker --addons=ingress --addons=ingress-dns --insecure-registry="host.minikube.internal:5000" --nodes 2
+	minikube start \
+		--driver=docker \
+		--addons=ingress \
+		--addons=ingress-dns \
+		--addons=metrics-server \
+		--insecure-registry="host.minikube.internal:5000" \
+		--nodes 2
 
 stop-cluster:
 	minikube stop

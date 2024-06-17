@@ -83,3 +83,15 @@ def test_root_of_gin_example() -> None:
     assert len(data) == 2
     assert data["service"] == "gin-example"
     assert isinstance(data["version"], str)
+
+
+def test_root_of_django_example() -> None:
+    response = requests.get("http://django-example.test/")
+
+    data = response.json()
+
+    assert response.status_code == 200
+    assert isinstance(data, dict)
+    assert len(data) == 2
+    assert data["service"] == "django-example"
+    assert isinstance(data["version"], str)

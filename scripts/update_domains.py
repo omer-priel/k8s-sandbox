@@ -13,6 +13,7 @@ DOMAINS = [
     'fastify-example.test',
     'gohttp-example.test',
     'gin-example.test',
+    'django-example.test',
 ]
 FIRST_LINE = '# k8s-sandbox: Local Domains\n'
 LAST_LINE = '# k8s-sandbox: End of Local Domains\n'
