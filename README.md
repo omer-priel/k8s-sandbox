@@ -136,6 +136,8 @@ flowchart LR
     node-base-image
     python-base-image
     go-base-image
+    mongodb-base-image
+    mongo-express-base-image
   end
   subgraph Docker Host Containers
     subgraph local-registy
@@ -149,6 +151,12 @@ flowchart LR
       django-image
     end
     subgraph cluster[cluster minikube]
+      subgraph pv
+        pv0001
+        pv0002
+        pv0003
+      end
+
       subgraph control-plane-node
         k8s-api-server
         s8s-scheduler
@@ -166,6 +174,9 @@ flowchart LR
       end
 
       subgraph worker-node
+        mongodb-pod-1
+        mongo-express-pod-1
+
         nginx-pod-2
         nginx-pod-3
         express-pod-2
@@ -185,6 +196,22 @@ flowchart LR
       end
       
       worker-node <---> control-plane-node
+
+      mongodb-pvc --> pv
+      mongodb-pod-1 --> mongodb-pvc
+      
+      mongodb-base-image --> mongodb-deployment
+      mongodb-deployment --> mongodb-pod-1
+
+      mongodb-service --> mongodb-pod-1
+
+      mongo-express-base-image --> mongo-express-deployment
+      mongo-express-deployment --> mongo-express-pod-1
+
+      mongo-express-service --> mongo-express-pod-1
+      mongo-express-service --> mongodb-service
+
+      mongo-express-ingress --> mongo-express-service
 
       nginx-image --> nginx-deployment
       nginx-deployment --> nginx-pod-1 & nginx-pod-2 & nginx-pod-3
@@ -259,6 +286,7 @@ flowchart LR
     Terminal-Maintainer[Terminal] ---> local-registy
     Terminal-Maintainer --> CI
     Terminal-Maintainer --> kubectl --> k8s-api-server
+    Terminal-Maintainer ---> mongo-express-ingress
     Terminal-Maintainer ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress & django-ingress
     Browser-Maintainer[Browser] ---> nginx-ingress & express-ingress & fastapi-ingress & flask-ingress & fastify-ingress & gohttp-ingress & gin-ingress & django-ingress
   end
