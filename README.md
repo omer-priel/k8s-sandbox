@@ -295,7 +295,7 @@ flowchart LR
   end
 ```
 
-Full Target:
+Simple Kubernetes Example (not implemented in this repository):
 
 ```mermaid
 flowchart LR
