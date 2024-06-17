@@ -103,6 +103,9 @@ show-services:
 show-ingresses:
 	kubectl get ingresses
 
+show-namespaces:
+	kubectl get namespaces
+
 show-all:
 	kubectl get all
 
