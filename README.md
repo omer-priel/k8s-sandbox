@@ -307,6 +307,10 @@ flowchart LR
       etcd
     end
 
+    subgraph pv
+      pv0001
+    end
+
     subgraph Node1 [Node 1]
       Redis-1
       API-1
@@ -318,22 +322,27 @@ flowchart LR
     
     Node1 & Node2 <---> Master
 
+    Redis-pvc --> pv
+
+    Redis-1 & Redis-2 --> Redis-pvc
+
     Redis-service --> Redis-1 & Redis-2
 
     API-service --> API-1 & API-2
-    API->service --> Redis-service
+    API-service --> Redis-service
 
     Redis-Ingress --> Redis-service
     API-Ingress --> API-service
   end
   subgraph Maintainer
-    Terminal-Maintainer[Terminal] --> kubectl --> K8s-API-Server
-    Terminal-Maintainer  ---> Redis-Ingress
+    kubectl --> K8s-API-Server
+    Terminal-Maintainer[Terminal] --> Redis-Ingress
     Browser-Maintainer[Browser] ---> API-Ingress
   end
   subgraph Client
     Browser ---> API-Ingress
-    Terminal --> CLI --> API-Ingress
+    Terminal --> CLI
+    CLI --> API-Ingress
   end
 ```
 
