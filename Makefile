@@ -69,10 +69,10 @@ show-registry-images:
 
 # k8s
 k8s-apply:
-	kubectl apply -f k8s
+	kubectl apply -f k8s/*
 
 k8s-delete:
-	kubectl delete -f k8s
+	kubectl delete -f k8s/*
 
 show-nodes:
 	kubectl get nodes
