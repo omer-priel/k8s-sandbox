@@ -15,4 +15,4 @@ RUN go build -o ./ginexample
 
 EXPOSE 8000
 
-ENTRYPOINT [ "go", "run", "." ]
+ENTRYPOINT [ "./ginexample" ]

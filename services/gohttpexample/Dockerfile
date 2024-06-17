@@ -15,4 +15,4 @@ RUN go build -o ./gohttpexample
 
 EXPOSE 8000
 
-ENTRYPOINT [ "go", "run", "." ]
+ENTRYPOINT [ "./gohttpexample" ]
