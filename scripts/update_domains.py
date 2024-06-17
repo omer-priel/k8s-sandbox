@@ -5,7 +5,12 @@ import argparse
 
 
 CONFIG_FILE_LOCATION = '/etc/hosts'
+FIRST_LINE = '# k8s-sandbox: Local Domains\n'
+LAST_LINE = '# k8s-sandbox: End of Local Domains\n'
+
 DOMAINS = [
+    'mongo-express.test',
+
     'nginx-example.test',
     'express-example.test',
     'fastapi-example.test',
@@ -15,8 +20,6 @@ DOMAINS = [
     'gin-example.test',
     'django-example.test',
 ]
-FIRST_LINE = '# k8s-sandbox: Local Domains\n'
-LAST_LINE = '# k8s-sandbox: End of Local Domains\n'
 
 parser = argparse.ArgumentParser(
     description='Update the /etc/hosts file with the local domains (*.test).'

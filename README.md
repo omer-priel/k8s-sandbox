@@ -120,10 +120,10 @@ Add the following line:
 
 ## Ports Conventions
 
-| Port  | Description  |
-| ----- | ------------ |
-| 8000  | Service      |
-| 27017 | MongoDB      |
+| Port  | Description |
+| ----- | ----------- |
+| 8000  | Service     |
+| 27017 | MongoDB     |
 
 ## Data Flow
 
