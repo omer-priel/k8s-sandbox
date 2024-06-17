@@ -2,12 +2,86 @@
 
 ## Table of Contents
 
+* [Roadmap / Tasks](#roadmap--tasks)
 * [Tecnologies](#tecnologies)
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Data Flow](#data-flow)
 * [File Structure](#file-structure)
 * [License](#license)
+
+## Roadmap / Tasks
+
+* services
+  * Go
+    * http rest server
+    * Gin
+  * Python
+    * FastAPI
+    * Flask
+  * JavaScript:
+    * Express
+    * Fastify
+
+
+* test
+  * curl / bash
+  * go test
+  * pytest
+  * jest
+
+* service level
+  * schemas
+  * fake data models
+  * routes
+  * entry points
+  * static configs
+
+* Databases / Entities Storage
+  * PostgresSQL
+  * MySQL
+  * MongoDB
+  * Redis
+  * JSON
+  * XML
+  * CSV
+
+* service level 2
+  * connectors
+
+* packages
+  * schema packages
+  * connectors packages 
+  * entities packages
+  * named queries packages
+
+* clients (desktop)
+  * cli - go
+
+* services
+  * Django - Python
+  * NestJS - TypeScript
+
+* static
+  * react (vite + TypeScript)
+  * Vanilla JS (HTML + CSS + JS)
+  * Vanilla TS (HTML + CSS + TS)
+  * Vue
+  * SolidJS
+  * Angular
+  * Svelte
+
+* packages
+  * api sdks (controllers)
+    * JavaScript
+    * TypeScript
+    * Python
+    * Go
+
+* services
+  * NextJS - TypeScript
+
+coming soon
 
 ## Tecnologies
 
