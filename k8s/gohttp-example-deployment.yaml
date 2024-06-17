@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gohttp-example-deployment
+  labels:
+    app: gohttp-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gohttp-example
+  template:
+    metadata:
+      labels:
+        app: gohttp-example
+    spec:
+      containers:
+      - name: gohttp-example
+        image: host.minikube.internal:5000/k8s-sandbox-gohttp-example
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000

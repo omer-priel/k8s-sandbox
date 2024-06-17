@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gin-example-deployment
+  labels:
+    app: gin-example
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gin-example
+  template:
+    metadata:
+      labels:
+        app: gin-example
+    spec:
+      containers:
+      - name: gin-example
+        image: host.minikube.internal:5000/k8s-sandbox-gin-example
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
