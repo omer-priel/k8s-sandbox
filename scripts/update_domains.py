@@ -10,6 +10,7 @@ DOMAINS = [
     'express-example.test',
     'fastapi-example.test',
     'flask-example.test',
+    'fastify-example.test',
 ]
 FIRST_LINE = '# k8s-sandbox: Local Domains\n'
 LAST_LINE = '# k8s-sandbox: End of Local Domains\n'
