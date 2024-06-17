@@ -75,12 +75,23 @@ show-registry-images:
 
 # k8s
 k8s-apply:
+	kubectl apply -f k8s/volumes
+	kubectl apply -f k8s/storage
+	kubectl apply -f k8s/configs
 	kubectl apply -f k8s/db
 	kubectl apply -f k8s/services
 
 k8s-delete:
-	kubectl apply -f k8s/db
-	kubectl delete -f k8s/services
+	kubectl delete -f k8s/services || true
+	kubectl delete -f k8s/db || true
+	kubectl delete -f k8s/configs || true
+
+k8s-delete-all:
+	kubectl delete -f k8s/services || true
+	kubectl delete -f k8s/db || true
+	kubectl delete -f k8s/configs || true
+	kubectl delete -f k8s/storage || true
+	kubectl delete -f k8s/volumes || true
 
 show-nodes:
 	kubectl get nodes
