@@ -118,6 +118,13 @@ Add the following line:
 127.0.0.1  host.minikube.internal
 ```
 
+## Ports Conventions
+
+| Port  | Description  |
+| ----- | ------------ |
+| 8000  | Service      |
+| 27017 | MongoDB      |
+
 ## Data Flow
 
 Current On local machine:
