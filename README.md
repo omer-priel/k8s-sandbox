@@ -308,20 +308,23 @@ flowchart LR
     end
 
     subgraph Node1 [Node 1]
-      API-1
       Redis-1
+      API-1
     end
     subgraph Node2 [Node 2]
-      API-2
       Redis-2
+      API-2
     end
     
     Node1 & Node2 <---> Master
 
-    API-service --> API-1 & API-2
     Redis-service --> Redis-1 & Redis-2
-    API-Ingress --> API-service
+
+    API-service --> API-1 & API-2
+    API->service --> Redis-service
+
     Redis-Ingress --> Redis-service
+    API-Ingress --> API-service
   end
   subgraph Maintainer
     Terminal-Maintainer[Terminal] --> kubectl --> K8s-API-Server
