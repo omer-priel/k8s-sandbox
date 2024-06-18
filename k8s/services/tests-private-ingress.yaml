@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tests-private-ingress
+spec:
+  rules:
+  - host: tests-private.test
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tests-private-service
+            port:
+              number: 80

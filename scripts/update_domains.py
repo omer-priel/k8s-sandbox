@@ -9,9 +9,6 @@ FIRST_LINE = '# k8s-sandbox: Local Domains\n'
 LAST_LINE = '# k8s-sandbox: End of Local Domains\n'
 
 DOMAINS = [
-    'mongo-express-single.test',
-    'mongo-express-example.test',
-
     'nginx-example.test',
     'express-example.test',
     'fastapi-example.test',
@@ -20,6 +17,11 @@ DOMAINS = [
     'gohttp-example.test',
     'gin-example.test',
     'django-example.test',
+
+    'mongo-express-single.test',
+    'mongo-express-example.test',
+
+    'tests-private.test',
 ]
 
 parser = argparse.ArgumentParser(

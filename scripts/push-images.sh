@@ -4,6 +4,8 @@ set -x #echo on
 
 # Push images to local registry
 
+# services
+
 docker tag k8s-sandbox-express-example:latest localhost:5000/k8s-sandbox-express-example:latest
 docker push localhost:5000/k8s-sandbox-express-example:latest
 
@@ -27,3 +29,8 @@ docker push localhost:5000/k8s-sandbox-gin-example:latest
 
 docker tag k8s-sandbox-django-example:latest localhost:5000/k8s-sandbox-django-example:latest
 docker push localhost:5000/k8s-sandbox-django-example:latest
+
+# tests
+
+docker tag k8s-sandbox-tests-private:latest localhost:5000/k8s-sandbox-tests-private:latest
+docker push localhost:5000/k8s-sandbox-tests-private:latest

@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "private"
+version = "0.1.0"
+description = ""
+authors = []
+license = "MIT"
+packages = [
+    { include = "src", from = "." }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "*"
+uvicorn = "*"
+requests = "*"
+types-requests = "*"
+pymongo = "*"
+pymongo-stubs = "*"
+
+[tool.poetry.dev-dependencies]
+flake8 = "*"
+black = "*"
+mypy = "*"
+
+[tool.black]
+target-version = ['py311']
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.git
+    | \.mypy_cache
+  )/
+)
+'''

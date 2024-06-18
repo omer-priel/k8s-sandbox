@@ -36,6 +36,9 @@ services:
       context: ./packages/typescript/k8s-sandbox-activity
 
   # tests
+  tests-private:
+    build:
+      context: ./tests/private
   tests-infra:
     build:
       context: ./tests/infra
@@ -48,3 +51,4 @@ services:
     network_mode: "host"
     volumes:
       - /etc/hosts:/etc/hosts
+

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tests-private-deployment
+  labels:
+    app: tests-private
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tests-private
+  template:
+    metadata:
+      labels:
+        app: tests-private
+    spec:
+      containers:
+      - name: tests-private
+        image: host.minikube.internal:5000/k8s-sandbox-tests-private
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MONGODB_SINGLE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-single-configmap
+              key: database-url
+        - name: MONGODB_SINGLE_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-single-secret
+              key: mongo-root-username
+        - name: MONGODB_SINGLE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-single-secret
+              key: mongo-root-password
+        - name: MONGODB_EXAMPLE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-example-configmap
+              key: database-url
+        - name: MONGODB_EXAMPLE_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-example-secret
+              key: mongo-root-username
+        - name: MONGODB_EXAMPLE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-example-secret
+              key: mongo-root-password
