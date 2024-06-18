@@ -4,7 +4,7 @@ metadata:
   name: pv0003
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   capacity:
     storage: 3Gi
   hostPath:

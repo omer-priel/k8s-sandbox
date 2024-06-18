@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-single-deployment
+  labels:
+    app: mongodb-single
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-single
+  template:
+    metadata:
+      labels:
+        app: mongodb-single
+    spec:
+      volumes:
+        - name: mongodb-single-volume
+          persistentVolumeClaim:
+            claimName: mongodb-single-pv-claim
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+          - containerPort: 27017
+        volumeMounts:
+          - name: mongodb-single-volume
+            mountPath: /data/db
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-single-secret
+                key: mongo-root-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-single-secret
+                key: mongo-root-password

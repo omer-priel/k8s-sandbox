@@ -1,30 +1,27 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mongodb-example-deployment
+  name: mongodb-example-statefulset
   labels:
     app: mongodb-example
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: mongodb-example
+  serviceName: mongodb-example-service
   template:
     metadata:
       labels:
         app: mongodb-example
     spec:
-      volumes:
-        - name: mongodb-example-pv-storage
-          persistentVolumeClaim:
-            claimName: mongodb-example-pv-claim
       containers:
       - name: mongodb
         image: mongo
         ports:
           - containerPort: 27017
         volumeMounts:
-          - name: mongodb-example-pv-storage
+          - name: mongodb-example-pv-claim
             mountPath: /data/db
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
@@ -37,3 +34,21 @@ spec:
               secretKeyRef:
                 name: mongodb-example-secret
                 key: mongo-root-password
+        args:
+          - '--dbpath'
+          - /data/db
+        command:
+          - mongod
+          - '--bind_ip_all'
+          - '--replSet'
+          - rs0
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: mongodb-example-pv-claim
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 3Gi

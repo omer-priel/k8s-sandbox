@@ -9,7 +9,8 @@ FIRST_LINE = '# k8s-sandbox: Local Domains\n'
 LAST_LINE = '# k8s-sandbox: End of Local Domains\n'
 
 DOMAINS = [
-    'mongo-express.test',
+    'mongo-express-single.test',
+    'mongo-express-example.test',
 
     'nginx-example.test',
     'express-example.test',

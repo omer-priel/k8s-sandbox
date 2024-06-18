@@ -16,9 +16,7 @@ lint: yamllint shellcheck kube-linter
 start-cluster:
 	minikube start \
 		--driver=docker \
-		--addons=ingress \
-		--addons=ingress-dns \
-		--addons=metrics-server \
+		--addons=ingress,ingress-dns,metrics-server \
 		--insecure-registry="host.minikube.internal:5000" \
 		--nodes 2
 
@@ -52,7 +50,7 @@ start-registry:
 	docker compose -f docker-compose.registry.yaml up -d
 
 stop-registry:
-	docker compose -f docker-compose.registry.yaml down
+	docker compose -f docker-compose.registry.yaml stop
 
 delete-registry:
 	docker compose -f docker-compose.registry.yaml down --rmi local --volumes
@@ -73,22 +71,26 @@ push-images:
 show-registry-images:
 	curl -s -X GET http://host.minikube.internal:5000/v2/_catalog | jq --color-output .
 
+#	kubectl apply -f k8s/db/mongodb-example
+
 # k8s
 k8s-apply:
 	kubectl apply -f k8s/volumes
 	kubectl apply -f k8s/storage
 	kubectl apply -f k8s/configs
-	kubectl apply -f k8s/db
+	kubectl apply -f k8s/db/mongodb-single
 	kubectl apply -f k8s/services
 
 k8s-delete:
 	kubectl delete -f k8s/services || true
-	kubectl delete -f k8s/db || true
+	kubectl delete -f k8s/db/mongodb-single || true
 	kubectl delete -f k8s/configs || true
+
+# kubectl delete -f k8s/db/mongodb-example || true
 
 k8s-delete-all:
 	kubectl delete -f k8s/services || true
-	kubectl delete -f k8s/db || true
+	kubectl delete -f k8s/db/mongodb-single || true
 	kubectl delete -f k8s/configs || true
 	kubectl delete -f k8s/storage || true
 	kubectl delete -f k8s/volumes || true

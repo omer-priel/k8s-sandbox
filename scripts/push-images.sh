@@ -16,6 +16,9 @@ docker push localhost:5000/k8s-sandbox-fastapi-example:latest
 docker tag k8s-sandbox-flask-example:latest localhost:5000/k8s-sandbox-flask-example:latest
 docker push localhost:5000/k8s-sandbox-flask-example:latest
 
+docker tag k8s-sandbox-fastify-example:latest localhost:5000/k8s-sandbox-fastify-example:latest
+docker push localhost:5000/k8s-sandbox-fastify-example:latest
+
 docker tag k8s-sandbox-gohttp-example:latest localhost:5000/k8s-sandbox-gohttp-example:latest
 docker push localhost:5000/k8s-sandbox-gohttp-example:latest
 
