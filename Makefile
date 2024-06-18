@@ -71,26 +71,25 @@ push-images:
 show-registry-images:
 	curl -s -X GET http://host.minikube.internal:5000/v2/_catalog | jq --color-output .
 
-#	kubectl apply -f k8s/db/mongodb-example
-
 # k8s
 k8s-apply:
 	kubectl apply -f k8s/volumes
 	kubectl apply -f k8s/storage
 	kubectl apply -f k8s/configs
 	kubectl apply -f k8s/db/mongodb-single
+	kubectl apply -f k8s/db/mongodb-example
 	kubectl apply -f k8s/services
 
 k8s-delete:
 	kubectl delete -f k8s/services || true
 	kubectl delete -f k8s/db/mongodb-single || true
+	kubectl delete -f k8s/db/mongodb-example || true
 	kubectl delete -f k8s/configs || true
-
-# kubectl delete -f k8s/db/mongodb-example || true
 
 k8s-delete-all:
 	kubectl delete -f k8s/services || true
 	kubectl delete -f k8s/db/mongodb-single || true
+	kubectl delete -f k8s/db/mongodb-example || true
 	kubectl delete -f k8s/configs || true
 	kubectl delete -f k8s/storage || true
 	kubectl delete -f k8s/volumes || true
