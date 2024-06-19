@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mongodb-example
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mongodb-example
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: mongo
+        image: mongo:7.0
         ports:
           - containerPort: 27017
         volumeMounts:
@@ -35,13 +35,13 @@ spec:
                 name: mongodb-example-secret
                 key: mongo-root-password
         args:
-          - '--dbpath'
-          - /data/db
+          - --replSet
+          - rs0
+          - --bind_ip_all
+          - --port
+          - '27017'
         command:
           - mongod
-          - '--bind_ip_all'
-          - '--replSet'
-          - rs0
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
