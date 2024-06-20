@@ -46,3 +46,13 @@ spec:
             configMapKeyRef:
               name: mongodb-sharded-cluster-configmap
               key: database-host
+        - name: MONGODB_SHARDED_CLUSTER_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-sharded-cluster-secret
+              key: user
+        - name: MONGODB_SHARDED_CLUSTER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-sharded-cluster-secret
+              key: password

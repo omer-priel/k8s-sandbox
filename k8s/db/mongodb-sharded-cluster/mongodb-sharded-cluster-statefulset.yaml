@@ -30,12 +30,25 @@ spec:
             value: "27017"
           - name: SERVICE_REPLICAS
             value: "2"
+          - name: SERVICE_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-sharded-cluster-secret
+                key: user
+          - name: SERVICE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-sharded-cluster-secret
+                key: password
         command:
           - mongod
         args:
           - --replSet
           - rs0
-          - --bind_ip_all
+          - ----bind_ip_all
+          - --auth
+          - --keyFile
+          - /data/db/keyfile
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
