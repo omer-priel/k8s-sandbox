@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-express-sharded-cluster-ingress
+spec:
+  rules:
+  - host: mongo-express-sharded-cluster.test
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mongo-express-sharded-cluster-service
+            port:
+              number: 80

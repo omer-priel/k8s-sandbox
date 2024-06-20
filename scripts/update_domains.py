@@ -20,6 +20,7 @@ DOMAINS = [
 
     'mongo-express-single.test',
     'mongo-express-example.test',
+    'mongo-express-sharded-cluster.test',
 
     'tests-private.test',
 ]

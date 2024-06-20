@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb-sharded-cluster-statefulset
+  labels:
+    app: mongodb-sharded-cluster
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongodb-sharded-cluster
+  serviceName: mongodb-sharded-cluster-service
+  template:
+    metadata:
+      labels:
+        app: mongodb-sharded-cluster
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:7.0
+        ports:
+          - containerPort: 27017
+        volumeMounts:
+          - name: mongodb-sharded-cluster-pv-claim
+            mountPath: /data/db
+        env:
+          - name: SERVICE_FULL_HOST_NAME
+            value: mongodb-sharded-cluster-service.default.svc.cluster.local
+          - name: SERVICE_PORT
+            value: "27017"
+          - name: SERVICE_REPLICAS
+            value: "2"
+        command:
+          - mongod
+        args:
+          - --replSet
+          - rs0
+          - --bind_ip_all
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: mongodb-sharded-cluster-pv-claim
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi

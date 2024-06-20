@@ -78,20 +78,24 @@ k8s-apply:
 	kubectl apply -f k8s/configs
 	kubectl apply -f k8s/db/mongodb-single
 	kubectl apply -f k8s/db/mongodb-example
+	kubectl apply -f k8s/db/mongodb-sharded-cluster
 	sleep 3
 	bash scripts/deploy/mongodb-example-post-deploy.sh
+	bash scripts/deploy/mongodb-sharded-cluster-post-deploy.sh
 	kubectl apply -f k8s/services
 
 k8s-delete:
 	kubectl delete -f k8s/services || true
 	kubectl delete -f k8s/db/mongodb-single || true
 	kubectl delete -f k8s/db/mongodb-example || true
+	kubectl delete -f k8s/db/mongodb-sharded-cluster || true
 	kubectl delete -f k8s/configs || true
 
 k8s-delete-all:
 	kubectl delete -f k8s/services || true
 	kubectl delete -f k8s/db/mongodb-single || true
 	kubectl delete -f k8s/db/mongodb-example || true
+	kubectl delete -f k8s/db/mongodb-sharded-cluster || true
 	kubectl delete -f k8s/configs || true
 	kubectl delete -f k8s/storage || true
 	kubectl delete pvc -l app=mongodb-example || true

@@ -34,3 +34,14 @@ def test_root_of_mongodb_example() -> None:
     assert isinstance(data, dict)
     assert "ok" in data
     assert data["ok"]
+
+
+def test_root_of_mongodb_sharded_cluster() -> None:
+    response = requests.get("http://tests-private.test/mongodb/mongodb-sharded-cluster")
+
+    data = response.json()
+
+    assert response.status_code == 200
+    assert isinstance(data, dict)
+    assert "ok" in data
+    assert data["ok"]
