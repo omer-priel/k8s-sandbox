@@ -3,4 +3,6 @@ kind: ConfigMap
 metadata:
   name: mongodb-example-configmap
 data:
-  database-url: mongodb-example-service
+  database-host: >
+    mongodb-example-statefulset-0.mongodb-example-service,
+    mongodb-example-statefulset-1.mongodb-example-service

@@ -40,14 +40,4 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: mongodb-example-configmap
-              key: database-url
-        - name: MONGODB_EXAMPLE_USER
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-example-secret
-              key: mongo-root-username
-        - name: MONGODB_EXAMPLE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-example-secret
-              key: mongo-root-password
+              key: database-host

@@ -9,9 +9,6 @@ from src.config import (
     MONGODB_SINGLE_USER,
     MONGODB_SINGLE_PASSWORD,
     MONGODB_EXAMPLE_HOST,
-    MONGODB_EXAMPLE_PORT,
-    MONGODB_EXAMPLE_USER,
-    MONGODB_EXAMPLE_PASSWORD,
 )
 
 router = APIRouter()
@@ -75,27 +72,12 @@ def route_mongodb_single() -> dict:
 
     mongo_uri = f"mongodb://{MONGODB_SINGLE_USER}:{MONGODB_SINGLE_PASSWORD}"
     mongo_uri += f"@{MONGODB_SINGLE_HOST}:{MONGODB_SINGLE_PORT}"
-    mongo_uri += "/?replicaSet=rs0&readPreference=primaryPreferred"
 
     return _check_mongodb_service(mongo_uri)
 
 
 @router.get("/mongodb-example")
 def route_mongodb_example() -> dict:
-    if MONGODB_EXAMPLE_USER is None:
-        return {
-            "ok": False,
-            "error": "MONGODB_EXAMPLE_USER is not set",
-            "payload": None,
-        }
-
-    if MONGODB_EXAMPLE_PASSWORD is None:
-        return {
-            "ok": False,
-            "error": "MONGODB_EXAMPLE_PASSWORD is not set",
-            "payload": None,
-        }
-
     if MONGODB_EXAMPLE_HOST is None:
         return {
             "ok": False,
@@ -103,7 +85,6 @@ def route_mongodb_example() -> dict:
             "payload": None,
         }
 
-    mongo_uri = f"mongodb://{MONGODB_EXAMPLE_USER}:{MONGODB_EXAMPLE_PASSWORD}"
-    mongo_uri += f"@{MONGODB_EXAMPLE_HOST}:{MONGODB_EXAMPLE_PORT}"
+    mongo_uri = f"mongodb://{MONGODB_EXAMPLE_HOST}/?replicaSet=rs0"
 
     return _check_mongodb_service(mongo_uri)

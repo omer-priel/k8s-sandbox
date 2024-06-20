@@ -78,6 +78,8 @@ k8s-apply:
 	kubectl apply -f k8s/configs
 	kubectl apply -f k8s/db/mongodb-single
 	kubectl apply -f k8s/db/mongodb-example
+	sleep 3
+	bash scripts/deploy/mongodb-example-post-deploy.sh
 	kubectl apply -f k8s/services
 
 k8s-delete:
@@ -92,6 +94,7 @@ k8s-delete-all:
 	kubectl delete -f k8s/db/mongodb-example || true
 	kubectl delete -f k8s/configs || true
 	kubectl delete -f k8s/storage || true
+	kubectl delete pvc -l app=mongodb-example || true
 	kubectl delete -f k8s/volumes || true
 
 show-nodes:

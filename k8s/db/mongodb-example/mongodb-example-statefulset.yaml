@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mongodb-example
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: mongodb-example
@@ -24,24 +24,18 @@ spec:
           - name: mongodb-example-pv-claim
             mountPath: /data/db
         env:
-          - name: MONGO_INITDB_ROOT_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-example-secret
-                key: mongo-root-username
-          - name: MONGO_INITDB_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-example-secret
-                key: mongo-root-password
+          - name: SERVICE_FULL_HOST_NAME
+            value: mongodb-example-service.default.svc.cluster.local
+          - name: SERVICE_PORT
+            value: "27017"
+          - name: SERVICE_REPLICAS
+            value: "2"
+        command:
+          - mongod
         args:
           - --replSet
           - rs0
           - --bind_ip_all
-          - --port
-          - '27017'
-        command:
-          - mongod
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
@@ -51,4 +45,4 @@ spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: 3Gi
+            storage: 1Gi
