@@ -1,3 +1,4 @@
+import json
 import requests
 
 
@@ -22,6 +23,8 @@ def test_root_of_mongodb_single() -> None:
     assert response.status_code == 200
     assert isinstance(data, dict)
     assert "ok" in data
+    if not data["ok"]:
+        print(json.dumps(data, indent=2))
     assert data["ok"]
 
 
@@ -33,6 +36,8 @@ def test_root_of_mongodb_example() -> None:
     assert response.status_code == 200
     assert isinstance(data, dict)
     assert "ok" in data
+    if not data["ok"]:
+        print(json.dumps(data, indent=2))
     assert data["ok"]
 
 
@@ -44,4 +49,6 @@ def test_root_of_mongodb_sharded_cluster() -> None:
     assert response.status_code == 200
     assert isinstance(data, dict)
     assert "ok" in data
+    if not data["ok"]:
+        print(json.dumps(data, indent=2))
     assert data["ok"]

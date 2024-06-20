@@ -10,6 +10,8 @@ from src.config import (
     MONGODB_SINGLE_PASSWORD,
     MONGODB_EXAMPLE_HOST,
     MONGODB_SHARDED_CLUSTER_HOST,
+    MONGODB_SHARDED_CLUSTER_USER,
+    MONGODB_SHARDED_CLUSTER_PASSWORD,
 )
 
 router = APIRouter()
@@ -93,6 +95,20 @@ def route_mongodb_example() -> dict:
 
 @router.get("/mongodb-sharded-cluster")
 def route_mongodb_sharded_cluster() -> dict:
+    if MONGODB_SHARDED_CLUSTER_USER is None:
+        return {
+            "ok": False,
+            "error": "MONGODB_SHARDED_CLUSTER_USER is not set",
+            "payload": None,
+        }
+
+    if MONGODB_SHARDED_CLUSTER_PASSWORD is None:
+        return {
+            "ok": False,
+            "error": "MONGODB_SHARDED_CLUSTER_PASSWORD is not set",
+            "payload": None,
+        }
+
     if MONGODB_SHARDED_CLUSTER_HOST is None:
         return {
             "ok": False,
@@ -100,6 +116,9 @@ def route_mongodb_sharded_cluster() -> dict:
             "payload": None,
         }
 
-    mongo_uri = f"mongodb://{MONGODB_SHARDED_CLUSTER_HOST}"
+    mongo_uri = "mongodb://"
+    mongo_uri += f"{MONGODB_SHARDED_CLUSTER_USER}:{MONGODB_SHARDED_CLUSTER_PASSWORD}"
+    mongo_uri += f"@{MONGODB_SHARDED_CLUSTER_HOST}"
+    mongo_uri += "/?replicaSet=rs0"
 
     return _check_mongodb_service(mongo_uri)

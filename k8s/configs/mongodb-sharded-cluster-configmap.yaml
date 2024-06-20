@@ -3,6 +3,16 @@ kind: ConfigMap
 metadata:
   name: mongodb-sharded-cluster-configmap
 data:
-  database-host: >
-    mongodb-sharded-cluster-statefulset-0.mongodb-sharded-cluster-service,
-    mongodb-sharded-cluster-statefulset-1.mongodb-sharded-cluster-service
+  database-host: "mongodb-sharded-cluster-statefulset-0.mongodb-sharded-cluster-service,\
+                  mongodb-sharded-cluster-statefulset-1.mongodb-sharded-cluster-service"
+  mongod.conf: |
+    net:
+      bindIpAll: true
+      port: 27017
+    security:
+      keyFile: /etc/mongodb-keyfile-volume/keyfile
+      authorization: enabled
+    storage:
+      dbPath: /data/db
+    replication:
+      replSetName: "rs0"

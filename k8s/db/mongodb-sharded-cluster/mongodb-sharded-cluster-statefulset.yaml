@@ -23,32 +23,43 @@ spec:
         volumeMounts:
           - name: mongodb-sharded-cluster-pv-claim
             mountPath: /data/db
+          - name: mongodb-keyfile-volume
+            mountPath: /etc/mongodb-keyfile-volume
+            readOnly: true
+          - name: mongodb-mongod-conf-volume
+            mountPath: /etc/mongod.conf
+            subPath: mongod.conf
         env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-sharded-cluster-secret
+                key: user
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-sharded-cluster-secret
+                key: password
           - name: SERVICE_FULL_HOST_NAME
             value: mongodb-sharded-cluster-service.default.svc.cluster.local
           - name: SERVICE_PORT
             value: "27017"
           - name: SERVICE_REPLICAS
             value: "2"
-          - name: SERVICE_USER
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-sharded-cluster-secret
-                key: user
-          - name: SERVICE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mongodb-sharded-cluster-secret
-                key: password
-        command:
-          - mongod
-        args:
-          - --replSet
-          - rs0
-          - ----bind_ip_all
-          - --auth
-          - --keyFile
-          - /data/db/keyfile
+      volumes:
+        - name: mongodb-keyfile-volume
+          secret:
+            secretName: mongodb-sharded-cluster-keyfile-secret
+            items:
+              - key: keyfile
+                path: keyfile
+                mode: 0600
+        - name: mongodb-mongod-conf-volume
+          configMap:
+            name: mongodb-sharded-cluster-configmap
+            items:
+              - key: mongod.conf
+                path: mongod.conf
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim

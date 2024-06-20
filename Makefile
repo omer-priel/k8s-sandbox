@@ -74,14 +74,14 @@ show-registry-images:
 # k8s
 k8s-apply:
 	kubectl apply -f k8s/volumes
-	kubectl apply -f k8s/storage
 	kubectl apply -f k8s/configs
 	kubectl apply -f k8s/db/mongodb-single
 	kubectl apply -f k8s/db/mongodb-example
 	kubectl apply -f k8s/db/mongodb-sharded-cluster
-	sleep 3
-	bash scripts/deploy/mongodb-example-post-deploy.sh
-	bash scripts/deploy/mongodb-sharded-cluster-post-deploy.sh
+	kubectl rollout restart statefulset mongodb-sharded-cluster-statefulset
+	# sleep 3
+	# bash scripts/deploy/mongodb-example-post-deploy.sh
+	# bash scripts/deploy/mongodb-sharded-cluster-post-deploy.sh
 	kubectl apply -f k8s/services
 
 k8s-delete:
@@ -97,8 +97,9 @@ k8s-delete-all:
 	kubectl delete -f k8s/db/mongodb-example || true
 	kubectl delete -f k8s/db/mongodb-sharded-cluster || true
 	kubectl delete -f k8s/configs || true
-	kubectl delete -f k8s/storage || true
+	kubectl delete pvc -l app=mongodb-single || true
 	kubectl delete pvc -l app=mongodb-example || true
+	kubectl delete pvc -l app=mongodb-sharded-cluster || true
 	kubectl delete -f k8s/volumes || true
 
 show-nodes:
@@ -109,6 +110,9 @@ restart-deployments:
 
 show-deployments:
 	kubectl get deployments
+
+restart-statefulsets:
+	kubectl rollout restart statefulset
 
 show-replicas:
 	kubectl get replicasets
@@ -129,7 +133,7 @@ show-all:
 	kubectl get all
 
 # deploy
-deploy: build-images push-images k8s-apply restart-deployments
+deploy: build-images push-images k8s-apply restart-deployments restart-statefulsets
 
 # packages lint
 lint-k8s-sandbox-activity:

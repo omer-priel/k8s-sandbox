@@ -1,7 +1,7 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mongodb-single-deployment
+  name: mongodb-single-statefulset
   labels:
     app: mongodb-single
 spec:
@@ -9,22 +9,19 @@ spec:
   selector:
     matchLabels:
       app: mongodb-single
+  serviceName: mongodb-single-service
   template:
     metadata:
       labels:
         app: mongodb-single
     spec:
-      volumes:
-        - name: mongodb-single-volume
-          persistentVolumeClaim:
-            claimName: mongodb-single-pv-claim
       containers:
       - name: mongodb
-        image: mongo
+        image: mongo:7.0
         ports:
           - containerPort: 27017
         volumeMounts:
-          - name: mongodb-single-volume
+          - name: mongodb-single-pv-claim
             mountPath: /data/db
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
@@ -37,3 +34,13 @@ spec:
               secretKeyRef:
                 name: mongodb-single-secret
                 key: mongo-root-password
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: mongodb-single-pv-claim
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
