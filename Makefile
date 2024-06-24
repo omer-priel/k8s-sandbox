@@ -26,6 +26,7 @@ stop-cluster:
 delete-cluster:
 	minikube delete
 
+# local domains (/etc/hosts)
 show-local-domains:
 	sudo $(shell which python) scripts/update_domains.py show
 
