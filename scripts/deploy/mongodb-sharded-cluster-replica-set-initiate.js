@@ -29,4 +29,4 @@ if (!rsInitiated) {
   rs.reconfig({_id: "rs0", version: 1, members: members});
 }
 
-exit();
+exit(0);

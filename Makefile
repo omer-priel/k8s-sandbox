@@ -79,10 +79,9 @@ k8s-apply:
 	kubectl apply -f k8s/db/mongodb-single
 	kubectl apply -f k8s/db/mongodb-example
 	kubectl apply -f k8s/db/mongodb-sharded-cluster
-	kubectl rollout restart statefulset mongodb-sharded-cluster-statefulset
-	# sleep 3
-	# bash scripts/deploy/mongodb-example-post-deploy.sh
-	# bash scripts/deploy/mongodb-sharded-cluster-post-deploy.sh
+	sleep 5
+	bash scripts/deploy/mongodb-example-post-deploy.sh
+	bash scripts/deploy/mongodb-sharded-cluster-post-deploy.sh
 	kubectl apply -f k8s/services
 
 k8s-delete:

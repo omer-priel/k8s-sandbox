@@ -7,7 +7,7 @@ data:
                   mongodb-sharded-cluster-statefulset-1.mongodb-sharded-cluster-service"
   mongod.conf: |
     net:
-      bindIpAll: true
+      bindIp: "*"
       port: 27017
     security:
       keyFile: /etc/mongodb-keyfile-volume/keyfile
